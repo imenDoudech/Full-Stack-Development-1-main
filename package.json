@@ -9,8 +9,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.10.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imenDoudech/Full-Stack-Development-1-main.git"
+  },
+  "bugs": {
+    "url": "https://github.com/imenDoudech/Full-Stack-Development-1-main/issues"
+  },
+  "homepage": "https://github.com/imenDoudech/Full-Stack-Development-1-main#readme",
   "devDependencies": {},
   "description": ""
 }

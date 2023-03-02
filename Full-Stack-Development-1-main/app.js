@@ -1,11 +1,15 @@
 require('dotenv').config();
 const Express = require('express');
 const mongoose = require ('mongoose');
+const bodyParser = require ('body-parser');
+
 const app = Express();
 const port = process.env.PORT || 3004;
+app.use(bodyParser.json());
+app.use (bodyParser.urlencoded({extended:false}))
 
 
-//const MongoManager = require('./src/shared/db/mongodb/mongo-manager')
+const MongoManager = require('./src/shared/db/mongodb/mongo-manager')
 const MiddleWare = require('./src/shared/middleware/base-middleware');
 const HealthRoutes = require('./src/routes/health.routes');
 const AdminRoutes = require('./src/routes/admin.routes');
@@ -26,7 +30,9 @@ AgentRoutes.registerAgentRoutes(app)
 regionRouter.registerRegionRoutes(app)
 
 
-//MongoManager.openMongoConnection();
+MongoManager.openMongoConnection();
+
+
 app.listen(port, () => {
     console.log(`server is listening on port ${port}`)
 })

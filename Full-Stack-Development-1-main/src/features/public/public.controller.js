@@ -1,23 +1,61 @@
+const express = require ('express');
 const Data = require('../../shared/resources/data');
+const Contact = require('../../shared/db/mongodb/schemas/contact.Schema');
+const { response } = require('express');
+const validator =require ('validator');
 
-const contactUs = (req,res) => {
-  const firstName = req.body.first_name;
-  const lastName = req.body.last_name;
-  const message = req.body.message;
 
-  const responseMessage = `Message received from ${firstName} ${lastName}`;
 
-  console.log(responseMessage);
-  res.send(responseMessage);
+
+
+
+const contactUs = async(req,res) => {
+  //Creation d'un nouvel contact
+  try{
+
+  
+  const newContact = new Contact({
+  name :req.body.name,
+  email : req.body.email,
+  phone : req.body.phone,
+  company_name : req.body.company_name,
+  project_name : req.body.project_name,
+  project_desc:req.body.project_desc,
+  department :req.body.department,
+  message :req.body.message,
+  file : null,
+
+});
+
+//const responseMessage = `Message received from ${first_name}`;
+
+//console.log(message);
+
+await newContact.save();
+res.send ("effectue avec success")
+
+  } catch (err){
+    console.log(err);
+  };
+
+
 };
 
-const calculateResidentialQuote = (req,res) => {
+
+
+
+
+const calculateQuote = (req,res) => {
 
   // define constants
   const apts = +req.query.apts;
   const floors = +req.query.floors;
   const tier = req.query.tier.toLowerCase();
-  const type= req.query.buildingTypeFields;
+  const typeBuilding = req.query.typeBuilding;
+  const maxOccupancy = req.query.maxOccupancy;
+
+
+
 
   // validate request object
   if(!Object.keys(Data.unitPrices).includes(tier)){
@@ -45,15 +83,24 @@ const calculateResidentialQuote = (req,res) => {
   }
 
   // business logic
-  const numElevators = calcResidentialElev(floors,apts);
-  const totalCost = calcInstallFee(numElevators,tier);
+
+  let numElevators;
+    if (validator.equals(typeBuilding.toLowerCase(), "residencial"))
+    numElevators =  calcResidentialElev(floors,apts);
+
+    else if (validator.equals(typeBuilding.toLowerCase(), "commercial"))
+    numElevators = calcCommercialElev (floors, maxOccupancy);
+
+  
+ const totalCost = calcInstallFee(numElevators,tier);
 
   // format response
   res.send({
     elevators_required:numElevators,
     cost: totalCost
   });
-};
+
+}
 
 const calcResidentialElev = (numFloors, numApts) => {
   const elevatorsRequired = Math.ceil(numApts / numFloors / 6)*Math.ceil(numFloors / 20);
@@ -73,4 +120,5 @@ const calcInstallFee = (numElvs, tier) => {
   return total;
 };
 
-module.exports = {contactUs,calculateResidentialQuote};
+
+  module.exports = {contactUs,calculateQuote}

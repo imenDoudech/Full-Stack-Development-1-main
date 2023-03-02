@@ -812,7 +812,7 @@
 							</div>
 
 
-							<form id="contact-form">
+							<form id="contact-form" method = "POST" action='./assets/js/contact.js'>
 								<fieldset>
 									<input type="hidden" name="action" value="contact_send" />
 
@@ -833,7 +833,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label for="company_name">Company Name *</label>
-                                            <input id="name" required type="text" value="" class="form-control" name="contact[name][required]">
+                                            <input id="company_name" required type="text" value="" class="form-control" name="contact[name][required]">
                                         </div>
                                         <div class="col-md-6">
                                             <label for="project_name">Project Name *</label>
@@ -843,7 +843,7 @@
 									<div class="row">
 											<div class="col-md-6">
                                                 <label for="project_description">Project Description *</label>
-												<input id="project_description" required type="text" value="" class="form-control" name="contact[subject][required]">
+												<input id="project_desc" required type="text" value="" class="form-control" name="contact[subject][required]">
 											</div>
 											<div class="col-md-6">
 												<label for="department">Department</label>
@@ -864,7 +864,7 @@
 											<div class="col-md-12">
 												<label for="attachment">File Attachment</label>
 												<!-- custom file upload -->
-												<input id="attachment" class="custom-file-upload" type="file" name="contact[attachment]"  data-btn-text="Select a File" />
+												<input id="file" class="custom-file-upload" type="file" name="contact[attachment]"  data-btn-text="Select a File" />
 												<small class="text-muted block">
                                                     Max file size: 10Mb (zip/pdf/jpg/png)
                                                 </small>
@@ -875,7 +875,7 @@
 
 								<div class="row">
 									<div class="col-md-12">
-										<button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-check"></i> SEND MESSAGE</button>
+										<button id="submit" type="submit" class="btn btn-primary btn-lg"><i class="fa fa-check"></i> SEND MESSAGE</button>
 									</div>
 								</div>
 							</form>
@@ -1044,7 +1044,8 @@
 		<script src="assets/js/view/demo.revolution_slider.js"></script>
 
 		<!-- PAGELEVEL SCRIPTS -->
-		<script src="assets/js/contact.js"></script>
+		<script src="assets/js/contact.js" defer></script>
+		<script src=".././features/public/public.controller.js"></script>
 
 		<!-- OPEN MODALS SCRIPT -->
 		<script type="text/javascript">
